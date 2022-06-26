@@ -1,1 +1,3 @@
-import './rendering-thumbnail.js';
+import './rendering-thumbnails.js';
+// import './rendering-full-photo.js';
+
