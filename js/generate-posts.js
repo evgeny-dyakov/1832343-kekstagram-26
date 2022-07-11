@@ -24,7 +24,7 @@ const messages = [
 const photoDescriptions = [
   'Настигло вдохновение, и запилил такую фотку',
   'Мне кажется, картинка передает эмоции. Что думаете?',
-  'Я художник, я так вижу. Лол',
+  'Я художник, я так вижу',
   'Есть идеи, как подписать фотку?',
   'Кажется, это моя лучшая фотка',
 ];
@@ -33,9 +33,9 @@ const minLikesCount = 15;
 
 const maxLikesCount = 200;
 
-const minCommentsCountPerPhoto = 5;
+const minCommentsCountPerPhoto = 1;
 
-const maxCommentsCountPerPhoto = 10;
+const maxCommentsCountPerPhoto = 5;
 
 const minCommentsIdNumber = 100;
 
