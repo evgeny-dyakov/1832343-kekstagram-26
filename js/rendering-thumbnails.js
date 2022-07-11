@@ -6,14 +6,18 @@ const posts = generatePosts(postsCount);
 const thumbnailsList = document.querySelector('.pictures');
 const thumbnailTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-posts.forEach((post) => {
+const thumbnailsFragment = document.createDocumentFragment();
+
+posts.forEach(({url, likes, comments}) => {
   const thumbnailItem = thumbnailTemplate.cloneNode(true);
 
-  thumbnailItem.querySelector('.picture__img').src = post.url;
-  thumbnailItem.querySelector('.picture__likes').textContent = post.likes;
-  thumbnailItem.querySelector('.picture__comments').textContent = post.comments.length;
+  thumbnailItem.querySelector('.picture__img').src = url;
+  thumbnailItem.querySelector('.picture__likes').textContent = likes;
+  thumbnailItem.querySelector('.picture__comments').textContent = comments.length;
 
-  thumbnailsList.appendChild(thumbnailItem);
+  thumbnailsFragment.appendChild(thumbnailItem);
 });
+
+thumbnailsList.appendChild(thumbnailsFragment);
 
 export {posts, thumbnailsList};

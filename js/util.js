@@ -4,6 +4,7 @@ function getRandomNumber (from, to) {
 
 function getRandomUniqueNumber (from, to) {
   const previousValues = [];
+
   return function () {
     let randomNumber = getRandomNumber(from, to);
     while (previousValues.includes(randomNumber)) {

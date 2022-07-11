@@ -1,71 +1,78 @@
-import {posts, thumbnailsList} from './rendering-thumbnails.js';
+import {thumbnailsList} from './rendering-thumbnails.js';
+import {posts} from './rendering-thumbnails.js';
 
 const fullPhoto = document.querySelector('.big-picture');
-const closeButton = fullPhoto.querySelector('.big-picture__cancel');
-const commentsList = fullPhoto.querySelector('.social__comments');
+const fullPhotoCancel = fullPhoto.querySelector('.big-picture__cancel');
+const fullPhotoComments = fullPhoto.querySelector('.social__comments');
 
-const thumbnails = thumbnailsList.querySelectorAll('.picture');
+const thumbnails = Array.from(thumbnailsList.querySelectorAll('.picture'));
 
-function removePreviousComments () {
-  const previousСomments = commentsList.children;
-  for (let i = previousСomments.length - 1; i >= 0; i--) {
-    previousСomments[i].remove();
+thumbnailsList.addEventListener('click', renderingFullPhoto);
+
+function renderingFullPhoto (evt) {
+  const thumbnail = evt.target.closest('.picture');
+
+  if (thumbnail) {
+    thumbnail.blur();
+
+    updateFullPhoto (thumbnails.findIndex((element) => element === thumbnail));
+    openFullPhoto();
   }
 }
 
-function addActualComments (post) {
-  post.comments.forEach((element) => {
-    const comment = document.createElement('li');
-    comment.classList.add('social__comment');
+function updateFullPhoto (index) {
+  fullPhoto.querySelector('.big-picture__img img').src = posts[index].url;
+  fullPhoto.querySelector('.likes-count').textContent = posts[index].likes;
+  fullPhoto.querySelector('.comments-count').textContent = posts[index].comments.length;
+  fullPhoto.querySelector('.social__caption').textContent = posts[index].description;
 
-    const userAvatar = document.createElement('img');
-    userAvatar.classList.add('social__picture');
-    userAvatar.src = element.avatar;
-    userAvatar.alt = 'Аватар комментатора фотографии';
-    userAvatar.width = '35';
-    userAvatar.height = '35';
+  updateComments(index);
+}
 
-    const userMessage = document.createElement('p');
-    userMessage.classList.add('social__text');
-    userMessage.textContent = element.message;
+function updateComments (index) {
+  const commentsFragment = document.createDocumentFragment();
+  const commentTemplate = fullPhotoComments.querySelector('.social__comment');
 
-    comment.appendChild(userAvatar);
-    comment.appendChild(userMessage);
-    commentsList.appendChild(comment);
+  posts[index].comments.forEach(({avatar, message}) => {
+    const comment = commentTemplate.cloneNode(true);
+    comment.querySelector('.social__picture').src = avatar;
+    comment.querySelector('.social__text').textContent = message;
+    commentsFragment.appendChild(comment);
   });
+
+  fullPhotoComments.innerHTML = '';
+  fullPhotoComments.appendChild(commentsFragment);
 }
 
-function renderingFullPhoto (thumbnail, post) {
-  thumbnail.addEventListener('click', () => {
-    fullPhoto.classList.remove('hidden');
+function openFullPhoto () {
+  fullPhoto.classList.remove('hidden');
+  document.body.classList.add('modal-open');
 
-    fullPhoto.querySelector('.big-picture__img img').src = post.url;
-    fullPhoto.querySelector('.likes-count').textContent = post.likes;
-    fullPhoto.querySelector('.comments-count').textContent = post.comments.length;
-    fullPhoto.querySelector('.social__caption').textContent = post.description;
-    removePreviousComments();
-    addActualComments(post);
+  fullPhoto.querySelector('.social__comment-count').classList.add('hidden');
+  fullPhoto.querySelector('.comments-loader').classList.add('hidden');
 
-    document.body.classList.add('modal-open');
+  fullPhotoCancel.addEventListener('click', onFullPhotoCancelClick);
+  document.addEventListener('keydown', onFullPhotoEscDown);
 
-    fullPhoto.querySelector('.social__comment-count').classList.add('hidden');
-    fullPhoto.querySelector('.comments-loader').classList.add('hidden');
-  });
+  thumbnailsList.removeEventListener('click', renderingFullPhoto);
 }
 
-for (let i = 0; i < thumbnails.length; i++) {
-  renderingFullPhoto(thumbnails[i], posts[i]);
-}
-
-closeButton.addEventListener('click', () => {
+function closeFullPhoto () {
   fullPhoto.classList.add('hidden');
   document.body.classList.remove('modal-open');
-});
 
-document.addEventListener('keydown', (evt) => {
-  if (evt.keyCode === 27) {
-    fullPhoto.classList.add('hidden');
-    document.body.classList.remove('modal-open');
+  fullPhotoCancel.removeEventListener('click', onFullPhotoCancelClick);
+  document.removeEventListener('keydown', onFullPhotoEscDown);
+
+  thumbnailsList.addEventListener('click', renderingFullPhoto);
+}
+
+function onFullPhotoCancelClick () {
+  closeFullPhoto();
+}
+
+function onFullPhotoEscDown (evt) {
+  if (evt.key === 'Escape') {
+    closeFullPhoto();
   }
-});
-
+}
