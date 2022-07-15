@@ -35,7 +35,7 @@ const maxLikesCount = 200;
 
 const minCommentsCountPerPhoto = 1;
 
-const maxCommentsCountPerPhoto = 5;
+const maxCommentsCountPerPhoto = 15;
 
 const minCommentsIdNumber = 100;
 

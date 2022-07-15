@@ -11,7 +11,15 @@ const pristine = new Pristine(uploadForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-error',
-}, false);
+});
+
+pristine.addValidator(hashtagField, validateHashtags, 'максимум 5 | #hashtags | до 20 символов');
+
+function validateUploadForm (evt) {
+  evt.preventDefault();
+  // const isValid = pristine.validate();
+  // console.log(isValid);
+}
 
 function validateHashtags () {
   if (hashtagField.value === '') {
@@ -33,16 +41,6 @@ function validateHashtags () {
   return true;
 }
 
-pristine.addValidator(hashtagField, validateHashtags, 'максимум 5 | #hashtags | до 20 символов');
-
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  // const isValid = pristine.validate();
-  // console.log(isValid);
-});
-
-// валидацию поставить, валидацию снять
-
 uploadControl.addEventListener('change', onUploadControlChange);
 
 function onUploadControlChange () {
@@ -57,6 +55,8 @@ function onUploadControlChange () {
 
   commentField.textContent = '';
 
+  uploadForm.addEventListener('submit', validateUploadForm);
+
   uploadControl.removeEventListener('change', onUploadControlChange);
 }
 
@@ -70,6 +70,8 @@ function closeEditingForm () {
 
   editingFormCancel.removeEventListener('click', onEditingFormCancelClick);
   document.removeEventListener('keydown', onEditingFormCancelEscDowm);
+
+  uploadForm.removeEventListener('submit', validateUploadForm);
 
   commentField.removeEventListener('keydown', onFieldEscDown);
   hashtagField.removeEventListener('keydown', onFieldEscDown);
