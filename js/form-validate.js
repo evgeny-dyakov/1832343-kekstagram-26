@@ -17,8 +17,8 @@ pristine.addValidator(hashtagField, validateHashtags, 'максимум 5 | #has
 
 function validateUploadForm (evt) {
   evt.preventDefault();
-  const isValid = pristine.validate();
-  console.log(isValid);
+  // const isValid = pristine.validate();
+  // console.log(isValid);
 }
 
 function validateHashtags () {
