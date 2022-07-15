@@ -48,9 +48,6 @@ function openFullPhoto () {
   fullPhoto.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
-  fullPhoto.querySelector('.social__comment-count').classList.add('hidden');
-  fullPhoto.querySelector('.comments-loader').classList.add('hidden');
-
   fullPhotoCancel.addEventListener('click', onFullPhotoCancelClick);
   document.addEventListener('keydown', onFullPhotoEscDown);
 
