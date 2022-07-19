@@ -710,6 +710,21 @@ main {
   border-radius: 5px;
 }
 
+.img-upload__field-wrapper {
+  position: relative;
+}
+
+.img-upload__field-error {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+
+  font-size: 12px;
+
+  text-transform: none;
+  transform: translateX(-50%);
+}
+
 
 /**
  * Кнопка для отправки изображения
