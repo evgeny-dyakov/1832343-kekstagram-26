@@ -1,5 +1,4 @@
-import {thumbnailsList} from './rendering-thumbnails.js';
-import {posts} from './rendering-thumbnails.js';
+import {posts, thumbnailsList} from './rendering-thumbnails.js';
 
 const fullPhoto = document.querySelector('.big-picture');
 const fullPhotoCancel = fullPhoto.querySelector('.big-picture__cancel');
@@ -47,20 +46,16 @@ function updateComments (index) {
 function openFullPhoto () {
   fullPhoto.classList.remove('hidden');
   document.body.classList.add('modal-open');
-
   fullPhotoCancel.addEventListener('click', onFullPhotoCancelClick);
   document.addEventListener('keydown', onFullPhotoEscDown);
-
   thumbnailsList.removeEventListener('click', renderingFullPhoto);
 }
 
 function closeFullPhoto () {
   fullPhoto.classList.add('hidden');
   document.body.classList.remove('modal-open');
-
   fullPhotoCancel.removeEventListener('click', onFullPhotoCancelClick);
   document.removeEventListener('keydown', onFullPhotoEscDown);
-
   thumbnailsList.addEventListener('click', renderingFullPhoto);
 }
 

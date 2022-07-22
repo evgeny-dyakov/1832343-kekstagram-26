@@ -17,7 +17,8 @@ function onScaleControlClick (evt) {
 
 function scaleReset () {
   currentScaleValue = 100;
+  scaleValue.value = '100%';
   imgPreview.removeAttribute('style');
 }
 
-export {scaleControl, onScaleControlClick, scaleReset};
+export {scaleControl, onScaleControlClick, scaleReset, imgPreview};

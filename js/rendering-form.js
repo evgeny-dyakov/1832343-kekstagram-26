@@ -1,5 +1,6 @@
 import {validateUploadForm} from './validate-form.js';
 import {scaleControl, onScaleControlClick, scaleReset} from './scale-photo.js';
+import {effectsList, onEffectsListClick, effectsReset} from './effect-overlay.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 const uploadControl = uploadForm.querySelector('.img-upload__input');
@@ -15,12 +16,13 @@ function onUploadControlChange () {
   editingForm.classList.remove('hidden');
   document.body.classList.add('modal-open');
 
-  scaleControl.addEventListener('click', onScaleControlClick);
   editingFormCancel.addEventListener('click', onEditingFormCancelClick);
   document.addEventListener('keydown', onEditingFormCancelEscDowm);
   commentField.addEventListener('keydown', onFieldEscDown);
   hashtagField.addEventListener('keydown', onFieldEscDown);
   uploadForm.addEventListener('submit', validateUploadForm);
+  scaleControl.addEventListener('click', onScaleControlClick);
+  effectsList.addEventListener('click', onEffectsListClick);
 
   commentField.textContent = '';
 
@@ -31,18 +33,19 @@ function closeEditingForm () {
   editingForm.classList.add('hidden');
   document.body.classList.remove('modal-open');
 
+  editingFormCancel.removeEventListener('click', onEditingFormCancelClick);
+  document.removeEventListener('keydown', onEditingFormCancelEscDowm);
+  commentField.removeEventListener('keydown', onFieldEscDown);
+  hashtagField.removeEventListener('keydown', onFieldEscDown);
+  uploadForm.removeEventListener('submit', validateUploadForm);
+  scaleControl.removeEventListener('click', onScaleControlClick);
+  scaleReset();
+  effectsList.removeEventListener('click', onEffectsListClick);
+  effectsReset();
+
   uploadControl.value = null;
 
   uploadControl.addEventListener('change', onUploadControlChange);
-
-  scaleControl.removeEventListener('click', onScaleControlClick);
-  scaleReset();
-  editingFormCancel.removeEventListener('click', onEditingFormCancelClick);
-  document.removeEventListener('keydown', onEditingFormCancelEscDowm);
-  uploadForm.removeEventListener('submit', validateUploadForm);
-  commentField.removeEventListener('keydown', onFieldEscDown);
-  hashtagField.removeEventListener('keydown', onFieldEscDown);
-
 }
 
 function onEditingFormCancelClick () {

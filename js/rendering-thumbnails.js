@@ -20,4 +20,5 @@ posts.forEach(({url, likes, comments}) => {
 
 thumbnailsList.appendChild(thumbnailsFragment);
 
+
 export {posts, thumbnailsList};
