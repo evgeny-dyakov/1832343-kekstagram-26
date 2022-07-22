@@ -17,7 +17,7 @@ noUiSlider.create(sliderElement, {
 
 sliderElement.noUiSlider.on('update', () => {
   valueElement.value = sliderElement.noUiSlider.get();
-  console.log(valueElement.value);
+  // console.log(valueElement.value);
   // imgPreview.style.filter = `grayscale(${valueElement.value})`;
 });
 
@@ -28,7 +28,7 @@ function onEffectsListClick (evt) {
   }
 
   if (evt.target.matches('#effect-chrome')) {
-    console.log('chrome');
+    // console.log('chrome');
     sliderElement.noUiSlider.updateOptions({
       range: {
         min: 0,
